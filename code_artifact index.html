@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>朝のスナック「たて山」継続証明スタンプカード</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* リセット＆ベース設定（外部CDN不要の完全自己完結CSS） */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            font-family: 'Noto Serif JP', "Hiragino Mincho ProN", "Yu Mincho", serif;
+            background-color: #f6f2ea;
+            background-image: radial-gradient(#dfd7c8 0.7px, transparent 0.7px);
+            background-size: 16px 16px;
+            color: #1a2b4c;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: max(18px, env(safe-area-inset-top)) 14px max(32px, env(safe-area-inset-bottom));
+            line-height: 1.5;
+        }
+        button, input {
+            font-family: inherit;
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        .hidden {
+            display: none !important;
+        }
+
+        /* メインコンテナ */
+        .app-container {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* ヘッダー */
+        .app-header {
+            text-align: center;
+            padding-top: 4px;
+        }
+        .header-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            border: 1px solid #cfc3af;
+            background-color: rgba(253, 251, 247, 0.9);
+            max-width: 100%;
+        }
+        .header-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #1a2b4c;
+            flex-shrink: 0;
+        }
+        .header-tag-text {
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            color: #1a2b4c;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .main-title {
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #1a2b4c;
+            margin-top: 8px;
+            word-break: break-word;
+            line-height: 1.35;
+        }
+        .sub-title {
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            color: #5a6578;
+            margin-top: 3px;
+            word-break: break-word;
+        }
+
+        /* 会員証カード（紺色） */
+        .navy-card {
+            background: linear-gradient(150deg, #1a2b4c 0%, #101b33 100%);
+            box-shadow: 0 20px 40px -12px rgba(26, 43, 76, 0.35), 0 0 0 1px rgba(212, 198, 173, 0.25);
+            border-radius: 18px;
+            padding: 7px;
+            color: #f6f2ea;
+        }
+        .navy-card-inner {
+            border: 1px solid rgba(212, 198, 173, 0.32);
+            border-radius: 13px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* 会員情報上部 */
+        .member-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            border-bottom: 1px solid rgba(212, 198, 173, 0.22);
+            padding-bottom: 14px;
+        }
+        .member-left {
+            flex: 1;
+            min-width: 0;
+        }
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge-default {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-radius: 4px;
+            border: 1px solid rgba(212, 198, 173, 0.45);
+            background-color: rgba(246, 242, 234, 0.1);
+            color: #d4c6ad;
+        }
+        .badge-mid {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-radius: 4px;
+            border: 1px solid rgba(212, 198, 173, 0.85);
+            background-color: rgba(246, 242, 234, 0.22);
+            color: #fdfbf7;
+        }
+        .badge-top {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            border-radius: 4px;
+            border: 1px solid #f6f2ea;
+            background-color: #f6f2ea;
+            color: #1a2b4c;
+        }
+        .sync-text {
+            font-size: 9px;
+            color: #b8c4d9;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        .name-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .member-name-text {
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: #fdfbf7;
+            word-break: break-all;
+            line-height: 1.3;
+        }
+        .edit-name-btn {
+            color: #b8c4d9;
+            padding: 6px;
+            margin: -4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .member-right {
+            text-align: right;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+        .master-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 9px;
+            border-radius: 6px;
+            background-color: rgba(246, 242, 234, 0.12);
+            color: #d4c6ad;
+            font-size: 10px;
+            letter-spacing: 0.05em;
+        }
+        .visits-label {
+            font-size: 9px;
+            color: #b8c4d9;
+            letter-spacing: 0.1em;
+            display: block;
+        }
+        .visits-num {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fdfbf7;
+            line-height: 1.1;
+        }
+        .visits-unit {
+            font-size: 11px;
+            font-weight: 400;
+            color: #b8c4d9;
+            margin-left: 2px;
+        }
+
+        /* スタンプ枠エリア */
+        .stamp-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .stamp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            color: #d4c6ad;
+        }
+        .stamp-progress {
+            font-weight: 600;
+            color: #fdfbf7;
+            flex-shrink: 0;
+        }
+        .stamp-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            padding-top: 6px;
+        }
+        .stamp-slot {
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 4px;
+        }
+        .stamp-slot-empty {
+            background-color: rgba(14, 24, 45, 0.72);
+            border: 1px dashed rgba(212, 198, 173, 0.42);
+        }
+        .stamp-slot-filled {
+            background-color: #fdfbf7;
+            border: 1px solid #fdfbf7;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        }
+        .slot-num {
+            font-size: 13px;
+            font-weight: 500;
+            color: #8d9cb8;
+        }
+        .milestone-badge-3 {
+            position: absolute;
+            top: -8px;
+            padding: 1px 5px;
+            background-color: #2b4373;
+            border: 1px solid rgba(212, 198, 173, 0.55);
+            color: #fdfbf7;
+            font-size: 8px;
+            font-weight: 700;
+            border-radius: 4px;
+            white-space: nowrap;
+            max-width: 115%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .milestone-badge-5 {
+            position: absolute;
+            top: -8px;
+            padding: 1px 5px;
+            background-color: #f6f2ea;
+            color: #1a2b4c;
+            font-size: 8px;
+            font-weight: 700;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            max-width: 115%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 落款ハンコ印影 */
+        @keyframes stampDrop {
+            0% { transform: scale(2.1) rotate(-14deg); opacity: 0; }
+            65% { transform: scale(0.94) rotate(3deg); opacity: 1; }
+            100% { transform: scale(1) rotate(-3deg); opacity: 1; }
+        }
+        .hanko-seal {
+            width: 100%;
+            height: 100%;
+            max-width: 44px;
+            max-height: 44px;
+            border-radius: 50%;
+            border: 1.5px solid #1a2b4c;
+            box-shadow: inset 0 0 0 2px #fdfbf7, inset 0 0 0 3px #1a2b4c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #1a2b4c;
+            background-color: #fdfbf7;
+            animation: stampDrop 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .hanko-top {
+            font-size: 7.5px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        .hanko-bottom {
+            font-size: 9px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-top: 1px;
+        }
+
+        /* 特典ガイド枠 */
+        .reward-box {
+            background-color: rgba(13, 22, 41, 0.65);
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid rgba(212, 198, 173, 0.22);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 11px;
+        }
+        .reward-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            color: #d4c6ad;
+            font-weight: 600;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(212, 198, 173, 0.16);
+        }
+        .reward-box-note {
+            font-size: 9px;
+            color: #8d9cb8;
+            font-weight: 400;
+        }
+        .reward-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .reward-tag-3 {
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: rgba(246, 242, 234, 0.16);
+            color: #fdfbf7;
+            font-weight: 600;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+        .reward-tag-5 {
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: #f6f2ea;
+            color: #1a2b4c;
+            font-weight: 700;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+        .reward-text-3 {
+            color: #e6dfd3;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+        .reward-text-5 {
+            color: #fdfbf7;
+            font-weight: 500;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+
+        /* アクションボタン */
+        .action-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .primary-btn {
+            width: 100%;
+            padding: 15px 16px;
+            border-radius: 13px;
+            background-color: #1a2b4c;
+            color: #fdfbf7;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.12em;
+            box-shadow: 0 10px 20px -6px rgba(26, 43, 76, 0.3);
+            border: 1px solid #2f497a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+        .primary-btn:active {
+            transform: scale(0.98);
+            background-color: #101b33;
+        }
+        .sub-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4px;
+        }
+        .guide-link {
+            font-size: 11px;
+            color: #1a2b4c;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            padding: 4px 0;
+        }
+        .reset-link {
+            font-size: 11px;
+            color: #7a8499;
+            padding: 4px;
+        }
+
+        /* 朝の足跡ログパネル */
+        .ivory-panel {
+            background-color: rgba(253, 251, 247, 0.95);
+            border: 1px solid #dfd5c5;
+            box-shadow: 0 10px 25px -10px rgba(26, 43, 76, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .log-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e8dfd1;
+            padding-bottom: 10px;
+        }
+        .log-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a2b4c;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .log-bar {
+            width: 3px;
+            height: 15px;
+            background-color: #1a2b4c;
+            border-radius: 99px;
+        }
+        .log-auto-text {
+            font-size: 10px;
+            color: #7a8499;
+        }
+        .log-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 240px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .log-item {
+            padding: 11px 12px;
+            border-radius: 11px;
+            background-color: rgba(246, 242, 234, 0.85);
+            border: 1px solid #e3d9c8;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .log-item-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .log-visit-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: #1a2b4c;
+            color: #fdfbf7;
+        }
+        .log-date {
+            font-size: 10px;
+            color: #6b768a;
+        }
+        .log-note {
+            font-size: 12px;
+            color: #1a2b4c;
+            font-weight: 500;
+            margin-top: 4px;
+            word-break: break-word;
+        }
+        .log-done-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid rgba(26, 43, 76, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: #1a2b4c;
+            flex-shrink: 0;
+        }
+        .empty-log-text {
+            font-size: 11px;
+            color: #7a8499;
+            text-align: center;
+            padding: 16px 0;
+        }
+
+        /* フッター */
+        .app-footer {
+            text-align: center;
+            padding-bottom: 8px;
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            color: #848e9e;
+        }
+
+        /* モーダル共通スタイル（通常時は必ず非表示） */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(26, 43, 76, 0.65);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 100;
+            overflow-y: auto;
+        }
+        .modal-backdrop.is-open {
+            display: flex;
+        }
+        .modal-box {
+            background-color: #fdfbf7;
+            border: 1px solid #cfc3af;
+            border-radius: 18px;
+            width: 100%;
+            max-width: 380px;
+            padding: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin: auto;
+        }
+        .modal-box-large {
+            max-width: 420px;
+            max-height: 85vh;
+        }
+        .modal-header {
+            border-bottom: 1px solid #e8dfd1;
+            padding-bottom: 10px;
+        }
+        .modal-en {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: #6b768a;
+            display: block;
+        }
+        .modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a2b4c;
+            margin-top: 2px;
+        }
+        .modal-desc {
+            font-size: 11px;
+            color: #5a6578;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1a2b4c;
+        }
+        .form-sublabel {
+            font-size: 11px;
+            color: #5a6578;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background-color: #f6f2ea;
+            border: 1px solid #cfc3af;
+            color: #1a2b4c;
+            font-size: 16px; /* iOSズーム防止 */
+            outline: none;
+        }
+        .form-input:focus {
+            border-color: #1a2b4c;
+        }
+        .form-input-white {
+            background-color: #fdfbf7;
+            padding: 8px 10px;
+        }
+        .error-text {
+            font-size: 11px;
+            color: #b91c1c;
+            font-weight: 600;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            padding-top: 4px;
+        }
+        .btn-cancel {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            background-color: #ebe4d8;
+            color: #4a5568;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .btn-submit {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            background-color: #1a2b4c;
+            color: #fdfbf7;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* マスター設定内のスクロール領域 */
+        .settings-scroll {
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 2px;
+        }
+        .settings-card {
+            background-color: rgba(246, 242, 234, 0.85);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #dfd5c5;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .settings-card-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1a2b4c;
+            border-bottom: 1px solid #dfd5c5;
+            padding-bottom: 5px;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* お祝いモーダル */
+        .celebrate-circle {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background-color: #1a2b4c;
+            color: #fdfbf7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* トースト通知 */
+        .toast-msg {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1a2b4c;
+            color: #fdfbf7;
+            border: 1px solid rgba(212, 198, 173, 0.4);
+            font-size: 12px;
+            padding: 10px 20px;
+            border-radius: 999px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 200;
+            max-width: 90vw;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .toast-msg.is-visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ヘッダーエリア -->
+        <header class="app-header">
+            <div class="header-pill">
+                <span class="header-dot"></span>
+                <span id="ui-header-tag" class="header-tag-text">MORNING SALON MEMBER'S PASS</span>
+            </div>
+            <h1 id="ui-main-title" class="main-title">朝のスナック「たて山」</h1>
+            <p id="ui-sub-title" class="sub-title">朝の九十分を制する、大人の秘密基地</p>
+        </header>
+
+        <!-- メイン会員証カード -->
+        <section class="navy-card">
+            <div class="navy-card-inner">
+                
+                <!-- 会員情報ヘッダー -->
+                <div class="member-top">
+                    <div class="member-left">
+                        <div class="badge-row">
+                            <span id="member-badge" class="badge-default">ビギナー会員</span>
+                            <span id="sync-status" class="sync-text">● 端末内保存済</span>
+                        </div>
+                        <div class="name-row">
+                            <h2 id="member-name" class="member-name-text">ゲスト 会員様</h2>
+                            <button type="button" onclick="openNameModal()" class="edit-name-btn" title="お名前を編集">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="member-right">
+                        <button type="button" onclick="openMasterAuthModal()" class="master-btn" title="マスター専用管理画面">
+                            <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            <span>マスター管理</span>
+                        </button>
+                        <div>
+                            <span class="visits-label">累計参加回数</span>
+                            <div>
+                                <span id="total-visits" class="visits-num">0</span><span class="visits-unit">回</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5回サイクル スタンプグリッド -->
+                <div class="stamp-section">
+                    <div class="stamp-header">
+                        <span id="ui-card-subtitle">継続証明印（五回満了で特別特典）</span>
+                        <span id="cycle-progress-text" class="stamp-progress">現在 0 / 5 回目</span>
+                    </div>
+                    <div class="stamp-grid" id="stamp-grid"></div>
+                </div>
+
+                <!-- 特典ガイド -->
+                <div class="reward-box">
+                    <div class="reward-box-header">
+                        <span id="ui-reward-heading">継続達成特典のご案内</span>
+                        <span class="reward-box-note">達成時にマスターへご提示</span>
+                    </div>
+                    <div class="reward-row">
+                        <span id="display-step3-label" class="reward-tag-3">三回目</span>
+                        <span id="display-step3-text" class="reward-text-3">特別特典、プチギフト</span>
+                    </div>
+                    <div class="reward-row">
+                        <span id="display-step5-label" class="reward-tag-5">五回目</span>
+                        <span id="display-step5-text" class="reward-text-5">特別特典、次回参加費500円off</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- アクションボタンエリア -->
+        <section class="action-section">
+            <button type="button" id="stamp-action-btn" onclick="openStampModal()" class="primary-btn">
+                <svg width="16" height="16" fill="none" stroke="#d4c6ad" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span id="ui-action-btn-text">本日の朝活達成スタンプを押す</span>
+            </button>
+            <div class="sub-links">
+                <button type="button" onclick="openInstallGuideModal()" class="guide-link">ホーム画面にアプリとして追加する方法</button>
+                <button type="button" onclick="openResetModal()" class="reset-link">リセット</button>
+            </div>
+        </section>
+
+        <!-- 朝の足跡ログ -->
+        <section class="ivory-panel">
+            <div class="log-header">
+                <h3 class="log-title">
+                    <span class="log-bar"></span>
+                    <span id="ui-log-heading">朝の足跡ログ（継続の記録）</span>
+                </h3>
+                <span class="log-auto-text">自動保存中</span>
+            </div>
+            <div id="log-list" class="log-list"></div>
+        </section>
+
+        <!-- フッター -->
+        <footer class="app-footer">
+            ESTABLISHED FOR MORNING CONCENTRATION
+        </footer>
+
+    </div>
+
+    <!-- モーダル1：スタンプ押印＆マスター認証モーダル -->
+    <div id="stamp-modal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span class="modal-en">MASTER CHECK-IN</span>
+                <h3 class="modal-title">本日の朝活完了・押印確認</h3>
+                <p class="modal-desc">成果を一言記録し、マスターに画面をご提示ください。</p>
+            </div>
+            <div class="form-group">
+                <label class="form-label">1. 本日の達成メモ（任意）</label>
+                <input type="text" id="achievement-input" placeholder="例：読書30ページ、家計簿の整理など" class="form-input">
+            </div>
+            <div class="form-group">
+                <label class="form-label">2. マスター認証コード（マスター入力欄）</label>
+                <input type="password" inputmode="numeric" maxlength="4" id="master-pin" placeholder="4桁の認証コード" class="form-input" style="letter-spacing: 0.25em;">
+                <p id="pin-error-msg" class="error-text hidden">認証コードが一致しません。マスターにご確認ください。</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" onclick="closeStampModal()" class="btn-cancel">キャンセル</button>
+                <button type="button" id="confirm-stamp-btn" onclick="confirmStamp()" class="btn-submit">スタンプを押す</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル2：お名前編集モーダル -->
+    <div id="name-modal" class="modal-backdrop">
+        <div class="modal-box">
+            <h3 class="modal-title">会員証のお名前登録</h3>
+            <div class="form-group">
+                <input type="text" id="name-input" maxlength="20" placeholder="お名前またはニックネーム" class="form-input">
+            </div>
+            <div class="modal-actions">
+                <button type="button" onclick="closeNameModal()" class="btn-cancel">閉じる</button>
+                <button type="button" onclick="saveName()" class="btn-submit">保存する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル3：マスター認証ゲート -->
+    <div id="master-auth-modal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span class="modal-en">ADMIN ACCESS</span>
+                <h3 class="modal-title">マスター専用管理ロック</h3>
+                <p class="modal-desc">店舗名・文言・特典内容や認証コードを変更するにはマスターコードを入力してください。</p>
+            </div>
+            <div class="form-group">
+                <input type="password" inputmode="numeric" maxlength="4" id="admin-auth-pin" placeholder="4桁の認証コード" class="form-input" style="letter-spacing: 0.2em;">
+                <p id="admin-pin-error" class="error-text hidden">認証コードが一致しません。</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" onclick="closeMasterAuthModal()" class="btn-cancel">閉じる</button>
+                <button type="button" onclick="verifyMasterAuth()" class="btn-submit">管理画面を開く</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル4：マスター専用一括編集モーダル -->
+    <div id="master-settings-modal" class="modal-backdrop">
+        <div class="modal-box modal-box-large">
+            <div class="modal-header">
+                <span class="modal-en">MASTER SETTINGS</span>
+                <h3 class="modal-title">店舗名・文言・特典の一括編集</h3>
+                <p class="modal-desc">保存すると画面全体に即座に反映されます。</p>
+            </div>
+
+            <div class="settings-scroll">
+                <div class="settings-card">
+                    <p class="settings-card-title">1. 屋号・タイトル・基本文言</p>
+                    <div class="form-group">
+                        <label class="form-sublabel">上部英語タグ</label>
+                        <input type="text" id="edit-header-tag" class="form-input form-input-white">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-sublabel">メインタイトル（店名・イベント名）</label>
+                        <input type="text" id="edit-main-title" class="form-input form-input-white" style="font-weight:700;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-sublabel">サブタイトル（キャッチコピー）</label>
+                        <input type="text" id="edit-sub-title" class="form-input form-input-white">
+                    </div>
+                    <div class="grid-2col">
+                        <div class="form-group">
+                            <label class="form-sublabel">ハンコ印影（1〜3文字）</label>
+                            <input type="text" id="edit-stamp-text" maxlength="3" class="form-input form-input-white">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-sublabel">カード内見出し</label>
+                            <input type="text" id="edit-card-subtitle" class="form-input form-input-white">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <p class="settings-card-title">2. 継続達成特典の設定</p>
+                    <div class="form-group">
+                        <label class="form-sublabel">特典欄の見出し</label>
+                        <input type="text" id="edit-reward-heading" class="form-input form-input-white">
+                    </div>
+                    <div class="grid-2col">
+                        <div class="form-group">
+                            <label class="form-sublabel">3回目ラベル</label>
+                            <input type="text" id="edit-reward-3-label" class="form-input form-input-white">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-sublabel">3回目バッジ</label>
+                            <input type="text" id="edit-badge-3" maxlength="5" class="form-input form-input-white">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-sublabel">3回目の特典内容</label>
+                        <input type="text" id="edit-reward-3" class="form-input form-input-white">
+                    </div>
+                    <div class="grid-2col">
+                        <div class="form-group">
+                            <label class="form-sublabel">5回目ラベル</label>
+                            <input type="text" id="edit-reward-5-label" class="form-input form-input-white">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-sublabel">5回目バッジ</label>
+                            <input type="text" id="edit-badge-5" maxlength="5" class="form-input form-input-white">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-sublabel">5回目の特典内容</label>
+                        <input type="text" id="edit-reward-5" class="form-input form-input-white">
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <p class="settings-card-title">3. 会員ランク名・ボタン表示</p>
+                    <div class="form-group">
+                        <label class="form-sublabel">初期ランク（0〜2回）</label>
+                        <input type="text" id="edit-rank-1" class="form-input form-input-white">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-sublabel">中級ランク（3〜4回）</label>
+                        <input type="text" id="edit-rank-2" class="form-input form-input-white">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-sublabel">上級ランク（5回以上）</label>
+                        <input type="text" id="edit-rank-3" class="form-input form-input-white">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-sublabel">押印ボタンの文言</label>
+                        <input type="text" id="edit-action-btn-text" class="form-input form-input-white">
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <p class="settings-card-title">4. マスター認証コード（4桁）</p>
+                    <input type="text" inputmode="numeric" maxlength="4" id="master-new-pin-input" placeholder="4桁の数字" class="form-input form-input-white" style="letter-spacing: 0.25em;">
+                </div>
+
+                <div class="settings-card" style="border-color: #e5b8b8; background-color: rgba(254, 242, 242, 0.7);">
+                    <p class="settings-card-title" style="color: #991b1b; border-bottom-color: #fecaca;">5. 会員データの完全初期化（累計リセット）</p>
+                    <p style="font-size: 10px; color: #7f1d1d; line-height: 1.5;">この端末に記録されている「累計参加回数・スタンプ・朝の足跡ログ」をすべて0にリセットします。（テスト押印後のリセットや機種変更時用）</p>
+                    <button type="button" id="full-reset-btn" onclick="handleFullDataReset()" style="padding: 9px 12px; border-radius: 8px; background-color: #991b1b; color: #fdfbf7; font-size: 11px; font-weight: 700; margin-top: 2px;">累計参加回数・履歴を0にリセットする</button>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" onclick="closeMasterSettingsModal()" class="btn-cancel">キャンセル</button>
+                <button type="button" id="save-master-btn" onclick="saveMasterSettings()" class="btn-submit">全設定を保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル5：特典達成お祝いモーダル -->
+    <div id="reward-modal" class="modal-backdrop">
+        <div class="modal-box" style="text-align: center; border: 2px solid #1a2b4c;">
+            <div class="celebrate-circle">祝</div>
+            <div>
+                <span class="modal-en">MILESTONE ACHIEVED</span>
+                <h3 id="reward-title" class="modal-title" style="font-size: 18px; margin-top: 4px;">継続特典達成</h3>
+                <p id="reward-desc" class="modal-desc" style="margin-top: 8px;"></p>
+            </div>
+            <button type="button" onclick="closeRewardModal()" class="btn-submit" style="width: 100%;">確認して閉じる</button>
+        </div>
+    </div>
+
+    <!-- モーダル6：リセット確認モーダル -->
+    <div id="reset-modal" class="modal-backdrop">
+        <div class="modal-box" style="text-align: center;">
+            <h3 class="modal-title">新しいカードに切り替えますか？</h3>
+            <p class="modal-desc">現在の5回分のスタンプ表示をリセットして1回目から再スタートします。（累計回数と足跡ログは残ります）</p>
+            <div id="reset-pin-box" class="form-group hidden" style="text-align: left;">
+                <label class="form-label">途中リセットにはマスター認証コードが必要です</label>
+                <input type="password" inputmode="numeric" maxlength="4" id="reset-pin-input" placeholder="4桁の認証コード" class="form-input" style="letter-spacing: 0.25em;">
+                <p id="reset-pin-error" class="error-text hidden">認証コードが一致しません。</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" onclick="closeResetModal()" class="btn-cancel">キャンセル</button>
+                <button type="button" onclick="executeCycleReset()" class="btn-submit">切り替える</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル7：ホーム画面追加ガイド -->
+    <div id="install-guide-modal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">ホーム画面への追加手順</h3>
+                <p class="modal-desc">次回からアプリのようにワンタップで開けます。</p>
+            </div>
+            <div class="settings-card">
+                <p style="font-size: 12px; font-weight: 700; color: #1a2b4c;">■ iPhone（Safari）の場合</p>
+                <p style="font-size: 11px; color: #4a5568; line-height: 1.5;">画面下の共有ボタン（四角から上矢印）をタップし、「ホーム画面に追加」を選択してください。</p>
+            </div>
+            <div class="settings-card">
+                <p style="font-size: 12px; font-weight: 700; color: #1a2b4c;">■ Android（Chrome）の場合</p>
+                <p style="font-size: 11px; color: #4a5568; line-height: 1.5;">画面右上のメニュー（︙）をタップし、「アプリをインストール」または「ホーム画面に追加」を選択してください。</p>
+            </div>
+            <button type="button" onclick="closeInstallGuideModal()" class="btn-submit" style="width: 100%;">閉じる</button>
+        </div>
+    </div>
+
+    <!-- トースト通知 -->
+    <div id="toast" class="toast-msg">保存しました</div>
+
+    <script>
+        const STORAGE_KEY_USER = 'tateyama_stamp_user_v1';
+        const STORAGE_KEY_CONFIG = 'tateyama_stamp_config_v1';
+
+        window.globalConfig = {
+            headerTag: "MORNING SALON MEMBER'S PASS",
+            mainTitle: "朝のスナック「たて山」",
+            subTitle: "朝の九十分を制する、大人の秘密基地",
+            stampText: "たて山",
+            cardSubtitle: "継続証明印（五回満了で特別特典）",
+            rewardHeading: "継続達成特典のご案内",
+            step3Label: "三回目",
+            step3Badge: "特別特典",
+            step3Text: "特別特典、プチギフト",
+            step5Label: "五回目",
+            step5Badge: "特別特典",
+            step5Text: "特別特典、次回参加費500円off",
+            rank1: "ビギナー会員",
+            rank2: "朝活レギュラー会員",
+            rank3: "常連ボトルキープ会員",
+            actionBtnText: "本日の朝活達成スタンプを押す",
+            masterPin: "7777"
+        };
+
+        window.appState = {
+            memberName: 'ゲスト',
+            currentCycleCount: 0,
+            totalCount: 0,
+            logs: []
+        };
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        window.renderUI = function() {
+            const state = window.appState;
+            const cfg = window.globalConfig;
+            if (!state || !cfg) return;
+
+            document.title = `${cfg.mainTitle} 継続証明スタンプカード`;
+            document.getElementById('ui-header-tag').textContent = cfg.headerTag;
+            document.getElementById('ui-main-title').textContent = cfg.mainTitle;
+            document.getElementById('ui-sub-title').textContent = cfg.subTitle;
+            document.getElementById('ui-card-subtitle').textContent = cfg.cardSubtitle;
+            document.getElementById('ui-reward-heading').textContent = cfg.rewardHeading;
+
+            document.getElementById('display-step3-label').textContent = cfg.step3Label;
+            document.getElementById('display-step3-text').textContent = cfg.step3Text;
+            document.getElementById('display-step5-label').textContent = cfg.step5Label;
+            document.getElementById('display-step5-text').textContent = cfg.step5Text;
+
+            document.getElementById('member-name').textContent = `${state.memberName} 会員様`;
+            document.getElementById('total-visits').textContent = state.totalCount;
+            document.getElementById('cycle-progress-text').textContent = `現在 ${state.currentCycleCount} / 5 回目`;
+
+            const badge = document.getElementById('member-badge');
+            if (state.totalCount >= 5) {
+                badge.textContent = cfg.rank3;
+                badge.className = 'badge-top';
+            } else if (state.totalCount >= 3) {
+                badge.textContent = cfg.rank2;
+                badge.className = 'badge-mid';
+            } else {
+                badge.textContent = cfg.rank1;
+                badge.className = 'badge-default';
+            }
+
+            const grid = document.getElementById('stamp-grid');
+            grid.innerHTML = '';
+            const safeCycleCount = Math.min(Math.max(Number(state.currentCycleCount) || 0, 0), 5);
+            for (let i = 1; i <= 5; i++) {
+                const isStamped = i <= safeCycleCount;
+                const slot = document.createElement('div');
+                slot.className = `stamp-slot ${isStamped ? 'stamp-slot-filled' : 'stamp-slot-empty'}`;
+
+                if (i === 3 && !isStamped && cfg.step3Badge) {
+                    slot.innerHTML += `<span class="milestone-badge-3">${escapeHTML(cfg.step3Badge)}</span>`;
+                }
+                if (i === 5 && !isStamped && cfg.step5Badge) {
+                    slot.innerHTML += `<span class="milestone-badge-5">${escapeHTML(cfg.step5Badge)}</span>`;
+                }
+
+                if (isStamped) {
+                    slot.innerHTML += `
+                        <div class="hanko-seal">
+                            <span class="hanko-top">${escapeHTML(cfg.stampText)}</span>
+                            <span class="hanko-bottom">済</span>
+                        </div>
+                    `;
+                } else {
+                    slot.innerHTML += `<span class="slot-num">${i}</span>`;
+                }
+                grid.appendChild(slot);
+            }
+
+            const btnText = document.getElementById('ui-action-btn-text');
+            btnText.textContent = safeCycleCount >= 5 ? '五回満了達成（新しいカードへ切替）' : cfg.actionBtnText;
+
+            const logList = document.getElementById('log-list');
+            if (!state.logs || state.logs.length === 0) {
+                logList.innerHTML = `<p class="empty-log-text">まだ記録がありません。最初のスタンプを押して記録を始めましょう。</p>`;
+            } else {
+                logList.innerHTML = state.logs.slice().reverse().map(log => `
+                    <div class="log-item">
+                        <div style="min-width: 0; flex: 1;">
+                            <div class="log-item-meta">
+                                <span class="log-visit-badge">第${escapeHTML(String(log.visitNumber))}回</span>
+                                <span class="log-date">${escapeHTML(log.date)}</span>
+                            </div>
+                            <p class="log-note">${escapeHTML(log.note || '朝の集中タイム完了')}</p>
+                        </div>
+                        <span class="log-done-circle">済</span>
+                    </div>
+                `).join('');
+            }
+        };
+
+        window.showToast = function(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('is-visible');
+            setTimeout(() => toast.classList.remove('is-visible'), 2500);
+        };
+
+        function saveToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(window.appState));
+                localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(window.globalConfig));
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('is-open');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('is-open');
+        }
+
+        window.openStampModal = function() {
+            if (window.appState.currentCycleCount >= 5) {
+                window.openResetModal();
+                return;
+            }
+            document.getElementById('achievement-input').value = '';
+            document.getElementById('master-pin').value = '';
+            document.getElementById('pin-error-msg').classList.add('hidden');
+            openModal('stamp-modal');
+        };
+        window.closeStampModal = function() { closeModal('stamp-modal'); };
+
+        window.confirmStamp = function() {
+            const pin = document.getElementById('master-pin').value.trim();
+            if (pin !== window.globalConfig.masterPin) {
+                document.getElementById('pin-error-msg').classList.remove('hidden');
+                return;
+            }
+            const note = document.getElementById('achievement-input').value.trim() || '朝の集中タイム完了';
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}`;
+
+            window.appState.currentCycleCount = Math.min((Number(window.appState.currentCycleCount) || 0) + 1, 5);
+            window.appState.totalCount = (Number(window.appState.totalCount) || 0) + 1;
+            window.appState.logs.push({
+                visitNumber: window.appState.totalCount,
+                date: dateStr,
+                note: note
+            });
+
+            saveToStorage();
+            window.renderUI();
+            closeStampModal();
+            window.showToast(`第${window.appState.totalCount}回のスタンプを押印しました`);
+
+            const c = window.appState.currentCycleCount;
+            if (c === 3) {
+                document.getElementById('reward-title').textContent = `${window.globalConfig.step3Label}特典 達成`;
+                document.getElementById('reward-desc').textContent = `おめでとうございます！「${window.globalConfig.step3Text}」を獲得しました。マスターへご提示ください。`;
+                openModal('reward-modal');
+            } else if (c === 5) {
+                document.getElementById('reward-title').textContent = `${window.globalConfig.step5Label}満了特典 達成`;
+                document.getElementById('reward-desc').textContent = `五回連続達成おめでとうございます！「${window.globalConfig.step5Text}」を獲得しました。`;
+                openModal('reward-modal');
+            }
+        };
+
+        window.closeRewardModal = function() { closeModal('reward-modal'); };
+
+        window.openNameModal = function() {
+            document.getElementById('name-input').value = window.appState.memberName === 'ゲスト' ? '' : window.appState.memberName;
+            openModal('name-modal');
+        };
+        window.closeNameModal = function() { closeModal('name-modal'); };
+        window.saveName = function() {
+            const val = document.getElementById('name-input').value.trim();
+            window.appState.memberName = val || 'ゲスト';
+            saveToStorage();
+            window.renderUI();
+            closeNameModal();
+            window.showToast('お名前を更新しました');
+        };
+
+        window.openMasterAuthModal = function() {
+            document.getElementById('admin-auth-pin').value = '';
+            document.getElementById('admin-pin-error').classList.add('hidden');
+            openModal('master-auth-modal');
+        };
+        window.closeMasterAuthModal = function() { closeModal('master-auth-modal'); };
+        window.verifyMasterAuth = function() {
+            const pin = document.getElementById('admin-auth-pin').value.trim();
+            if (pin !== window.globalConfig.masterPin) {
+                document.getElementById('admin-pin-error').classList.remove('hidden');
+                return;
+            }
+            closeMasterAuthModal();
+            window.openMasterSettingsModal();
+        };
+
+        window.openMasterSettingsModal = function() {
+            const cfg = window.globalConfig;
+            fullResetConfirmStep = false;
+            const resetBtn = document.getElementById('full-reset-btn');
+            if (resetBtn) {
+                resetBtn.textContent = '累計参加回数・履歴を0にリセットする';
+                resetBtn.style.backgroundColor = '#991b1b';
+            }
+            document.getElementById('edit-header-tag').value = cfg.headerTag;
+            document.getElementById('edit-main-title').value = cfg.mainTitle;
+            document.getElementById('edit-sub-title').value = cfg.subTitle;
+            document.getElementById('edit-stamp-text').value = cfg.stampText;
+            document.getElementById('edit-card-subtitle').value = cfg.cardSubtitle;
+            document.getElementById('edit-reward-heading').value = cfg.rewardHeading;
+            document.getElementById('edit-reward-3-label').value = cfg.step3Label;
+            document.getElementById('edit-badge-3').value = cfg.step3Badge;
+            document.getElementById('edit-reward-3').value = cfg.step3Text;
+            document.getElementById('edit-reward-5-label').value = cfg.step5Label;
+            document.getElementById('edit-badge-5').value = cfg.step5Badge;
+            document.getElementById('edit-reward-5').value = cfg.step5Text;
+            document.getElementById('edit-rank-1').value = cfg.rank1;
+            document.getElementById('edit-rank-2').value = cfg.rank2;
+            document.getElementById('edit-rank-3').value = cfg.rank3;
+            document.getElementById('edit-action-btn-text').value = cfg.actionBtnText;
+            document.getElementById('master-new-pin-input').value = cfg.masterPin;
+            openModal('master-settings-modal');
+        };
+        window.closeMasterSettingsModal = function() { closeModal('master-settings-modal'); };
+        window.saveMasterSettings = function() {
+            const newPin = document.getElementById('master-new-pin-input').value.trim();
+            if (!/^\d{4}$/.test(newPin)) {
+                window.showToast('認証コードは4桁の半角数字で入力してください');
+                return;
+            }
+            window.globalConfig = {
+                headerTag: document.getElementById('edit-header-tag').value.trim() || window.globalConfig.headerTag,
+                mainTitle: document.getElementById('edit-main-title').value.trim() || window.globalConfig.mainTitle,
+                subTitle: document.getElementById('edit-sub-title').value.trim() || window.globalConfig.subTitle,
+                stampText: document.getElementById('edit-stamp-text').value.trim() || '済',
+                cardSubtitle: document.getElementById('edit-card-subtitle').value.trim() || window.globalConfig.cardSubtitle,
+                rewardHeading: document.getElementById('edit-reward-heading').value.trim() || window.globalConfig.rewardHeading,
+                step3Label: document.getElementById('edit-reward-3-label').value.trim() || '三回目',
+                step3Badge: document.getElementById('edit-badge-3').value.trim(),
+                step3Text: document.getElementById('edit-reward-3').value.trim() || window.globalConfig.step3Text,
+                step5Label: document.getElementById('edit-reward-5-label').value.trim() || '五回目',
+                step5Badge: document.getElementById('edit-badge-5').value.trim(),
+                step5Text: document.getElementById('edit-reward-5').value.trim() || window.globalConfig.step5Text,
+                rank1: document.getElementById('edit-rank-1').value.trim() || 'ビギナー会員',
+                rank2: document.getElementById('edit-rank-2').value.trim() || '朝活レギュラー会員',
+                rank3: document.getElementById('edit-rank-3').value.trim() || '常連ボトルキープ会員',
+                actionBtnText: document.getElementById('edit-action-btn-text').value.trim() || '本日の朝活達成スタンプを押す',
+                masterPin: newPin
+            };
+            saveToStorage();
+            window.renderUI();
+            closeMasterSettingsModal();
+            window.showToast('店舗設定・特典内容を保存しました');
+        };
+
+        let fullResetConfirmStep = false;
+        window.handleFullDataReset = function() {
+            const btn = document.getElementById('full-reset-btn');
+            if (!fullResetConfirmStep) {
+                fullResetConfirmStep = true;
+                btn.textContent = '本当に初期化しますか？（もう一度タップで確定）';
+                btn.style.backgroundColor = '#7f1d1d';
+                return;
+            }
+            window.appState.currentCycleCount = 0;
+            window.appState.totalCount = 0;
+            window.appState.logs = [];
+            saveToStorage();
+            window.renderUI();
+            fullResetConfirmStep = false;
+            closeMasterSettingsModal();
+            window.showToast('累計参加回数と履歴を0にリセットしました');
+        };
+
+        window.openResetModal = function() {
+            const isFull = window.appState.currentCycleCount >= 5;
+            const pinBox = document.getElementById('reset-pin-box');
+            document.getElementById('reset-pin-input').value = '';
+            document.getElementById('reset-pin-error').classList.add('hidden');
+            if (isFull) {
+                pinBox.classList.add('hidden');
+            } else {
+                pinBox.classList.remove('hidden');
+            }
+            openModal('reset-modal');
+        };
+        window.closeResetModal = function() { closeModal('reset-modal'); };
+        window.executeCycleReset = function() {
+            const isFull = window.appState.currentCycleCount >= 5;
+            if (!isFull) {
+                const pin = document.getElementById('reset-pin-input').value.trim();
+                if (pin !== window.globalConfig.masterPin) {
+                    document.getElementById('reset-pin-error').classList.remove('hidden');
+                    return;
+                }
+            }
+            window.appState.currentCycleCount = 0;
+            saveToStorage();
+            window.renderUI();
+            closeResetModal();
+            window.showToast('新しいスタンプカードに切り替えました');
+        };
+
+        window.openInstallGuideModal = function() { openModal('install-guide-modal'); };
+        window.closeInstallGuideModal = function() { closeModal('install-guide-modal'); };
+
+        // 背景タップ閉じ
+        document.querySelectorAll('.modal-backdrop').forEach(el => {
+            el.addEventListener('click', (e) => {
+                if (e.target === el) el.classList.remove('is-open');
+            });
+        });
+
+        // 起動時復元
+        (function init() {
+            try {
+                const savedConfig = localStorage.getItem(STORAGE_KEY_CONFIG);
+                if (savedConfig) window.globalConfig = { ...window.globalConfig, ...JSON.parse(savedConfig) };
+                const savedUser = localStorage.getItem(STORAGE_KEY_USER);
+                if (savedUser) {
+                    const parsed = JSON.parse(savedUser);
+                    window.appState = {
+                        memberName: parsed.memberName || 'ゲスト',
+                        currentCycleCount: Number(parsed.currentCycleCount) || 0,
+                        totalCount: Number(parsed.totalCount) || 0,
+                        logs: Array.isArray(parsed.logs) ? parsed.logs : []
+                    };
+                }
+            } catch (e) {}
+            window.renderUI();
+        })();
+    </script>
+</body>
+</html>
